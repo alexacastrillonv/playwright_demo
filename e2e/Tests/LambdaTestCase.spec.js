@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import {HomePage} from '../Pages/HomePage.spec.js';
-import {CategoryPage} from '../Pages/CategoryPage.spec.js';
-import {SearchProductPage} from '../Pages/SearchProductPage.spec.js';
-import {ProductDetailPage} from '../Pages/ProductDetailPage.spec.js';
+import {HomePage} from '../Pages/HomePage.js';
+import {CategoryPage} from '../Pages/CategoryPage.js';
+import {SearchProductPage} from '../Pages/SearchProductPage.js';
+import {ProductDetailPage} from '../Pages/ProductDetailPage.js';
 
 
 test.describe('Home Page Validations', () => {
