@@ -3,8 +3,6 @@ import {HomePage} from '../Pages/HomePage.spec.js';
 import {CategoryPage} from '../Pages/CategoryPage.spec.js';
 import {SearchProductPage} from '../Pages/SearchProductPage.spec.js';
 import {ProductDetailPage} from '../Pages/ProductDetailPage.spec.js';
-import { execPath } from 'process';
-import { url } from 'inspector';
 
 
 test.describe('Home Page Validations', () => {
@@ -24,7 +22,6 @@ test('Verify homepage UI elements', async ({ page }) => {
   const homePage = new HomePage(page);
   await homePage.navigateTo();
   const expectedCategoriesExpected = ['Top Products','Top Collection' , 'From The Blog','Top Trending Categories', 'Under @99']
-  console.log(await homePage.getModuleTitles());
   await expect(await homePage.getModuleTitles()).toEqual(expect.arrayContaining(expectedCategoriesExpected));
 });
 
@@ -37,7 +34,7 @@ test('Navigate to product categories via mega menu', async ({ page }) => {
   await homePage.selectMegaMenuSubmenu('Desktop');
   await categoryPage.waitForURL('/index.php?route=product/category&path=20');
   await expect(await categoryPage.getCategoryTitle()).toBe('Desktops');
-  await expect(await categoryPage.getProducListLength()).toBeGreaterThan(0);
+  await expect(await categoryPage.getProductListLength()).toBeGreaterThan(0);
 });
 
 });
@@ -109,7 +106,7 @@ test('Search with empty query', async ({ page }) => {
   await homePage.searchProduct(' ');
   await homePage.clickSearchButton();
   await searchProductPage.waitForURL(`/index.php?route=product%2Fsearch&search=+`);
-  await expect(await searchProductPage.getProducListLength()).toBeGreaterThan(0);
+  await expect(await searchProductPage.getProductListLength()).toBeGreaterThan(0);
 });
 
 });

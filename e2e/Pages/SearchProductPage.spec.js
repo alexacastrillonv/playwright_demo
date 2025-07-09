@@ -1,7 +1,4 @@
-
-import { expect,  Locator,  page } from '@playwright/test';
-
-exports.SearchProductPage = class SearchProductPage {
+export class SearchProductPage {
     constructor(page) {
         this.page = page;
         this.title = page.locator('h1[class="h4"]');
@@ -23,7 +20,7 @@ exports.SearchProductPage = class SearchProductPage {
         return await this.productNotFoundMessage.textContent();
     }
 
-    async getProducListLength() {
+    async getProductListLength() {
         return await this.productList.count();
     }
     async waitForURL(productUrl) {

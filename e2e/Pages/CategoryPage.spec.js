@@ -1,6 +1,4 @@
-import { expect,  Locator,  Page } from '@playwright/test';
-
-exports.CategoryPage = class CategoryPage {
+export class CategoryPage {
     constructor(page) {
         this.page = page;
         this.categoryTitle = page.locator('.content-title > .h4');
@@ -14,7 +12,7 @@ exports.CategoryPage = class CategoryPage {
     async getCategoryTitle() {
         return await this.categoryTitle.textContent();
     }
-    async getProducListLength() {
+    async getProductListLength() {
         return await this.productList.count();
     }
 }

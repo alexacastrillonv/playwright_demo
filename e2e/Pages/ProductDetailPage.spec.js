@@ -1,6 +1,4 @@
-import { expect,  Locator,  page } from '@playwright/test';
-
-exports.ProductDetailPage = class ProductDetailPage {
+export class ProductDetailPage {
     constructor(page) {
         this.page = page;
         this.productName = page.locator('.h3');

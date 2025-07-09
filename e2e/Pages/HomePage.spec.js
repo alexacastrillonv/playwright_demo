@@ -1,7 +1,4 @@
-
-import { expect,  Locator,  Page } from '@playwright/test';
-
-exports.HomePage= class HomePage{
+export class HomePage{
     
     constructor(page){
         this.page = page;
