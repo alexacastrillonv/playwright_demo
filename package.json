@@ -3,13 +3,34 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:headless": "playwright test --headed",
+    "test:trace": "playwright test --trace on",
+    "test:report": "playwright show-report",
+    "test:byTag": "playwright test --grep @smoke",
+    "test:byTag:invert": "playwright test --grep-invert @smoke",
+    "test:chrome": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:all": "playwright test --project=chromium,firefox,webkit",
+    "test:specific": "playwright test tests/searchProduct.spec.js",
+    "test:report:open": "playwright show-report --open",
+    "test:allure": "playwright test --reporter=line,allure-playwright",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.53.2",
-    "@types/node": "^24.0.10"
+    "@types/node": "^24.0.10",
+    "allure-commandline": "^2.34.1",
+    "allure-playwright": "^3.3.0"
   }
 }

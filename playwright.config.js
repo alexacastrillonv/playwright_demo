@@ -23,7 +23,11 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  //reporter: 'list', report list 
+  //reporter: 'line', // report line
+  //reporter: 'dot', // report dot
+  //reporter: [['html', { open: 'always' }], ['list', { show: ['status', 'duration'] }],['junit',{outputFile:'result.xml'}]], // report html and list
+  reporter: process.env.CI? 'github' : [['html', { open: 'always' }], ['list', { show: ['status', 'duration'] }],['junit',{outputFile:'result.xml'}]], // report html and list and junit
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     headless: false,
@@ -31,7 +35,8 @@ export default defineConfig({
      baseURL: 'https://ecommerce-playground.lambdatest.io/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on-all-retries',
+    testIdAttribute: 'id', // Use 'id' attribute for test IDs
   },
 
   /* Configure projects for major browsers */

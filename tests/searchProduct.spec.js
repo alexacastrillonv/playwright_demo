@@ -3,7 +3,7 @@
 import { test, expect } from '@playwright/test';
 import { execPath } from 'process';
 
-test('Search the text iPod Nano', async ({ page }) => {
+test('Search the text iPod Nano @smoke', async ({ page }) => {
   await page.goto('/');
   await page.locator("span.title",{hasText: 'Mega Menu'}).hover();
   await page.locator("a[title=Desktop]").click();
@@ -12,8 +12,6 @@ test('Search the text iPod Nano', async ({ page }) => {
   await page.locator("a.btn.btn-primary.btn-block",{hasText: 'View Cart'}).click();
   await expect(page.locator("td[class='text-left'] a", { hasText: 'iPod Nano' })).toBeVisible();
   await expect(page.locator("div[class$='flex-nowrap'] > input")).toHaveValue('1');
-
-  
 });
 
 

@@ -11,7 +11,10 @@ node_modules/
 .vscode/
 package-lock.json
 
+result.xml
 
 
-
+#allure
+allure-report/
+allure-results/
 
