@@ -30,8 +30,9 @@ export default defineConfig({
   reporter: process.env.CI? 'github' : [['html', { open: 'always' }], ['list', { show: ['status', 'duration'] }],['junit',{outputFile:'result.xml'}]], // report html and list and junit
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    headless: false,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+     baseURL: 'https://ecommerce-playground.lambdatest.io/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-all-retries',
