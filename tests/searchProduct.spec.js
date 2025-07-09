@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 import { execPath } from 'process';
 
 test('Search the text iPod Nano', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
   await page.locator("span.title",{hasText: 'Mega Menu'}).hover();
   await page.locator("a[title=Desktop]").click();
   await page.locator("div.carousel-item.active > img[title='iPod Nano']").click();
@@ -17,8 +17,8 @@ test('Search the text iPod Nano', async ({ page }) => {
 });
 
 
-test('Validate that homepage loads properly', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+test('Validate that homepage loads successfully', async ({ page }) => {
+  await page.goto('/');
   const title = await page.getByTitle('Poco Electro')
   await expect(title).toBeVisible();
   const badge = page.locator('.cart-item-total').first();
@@ -32,32 +32,27 @@ test('Validate that homepage loads properly', async ({ page }) => {
   const searchTerm = 'ipod'
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill('ipod')
   await page.keyboard.press('Enter')
-  await page.waitForTimeout(3000)
-  const currentUrl = await page.url()
-  expect(currentUrl).toContain(searchTerm)
+  await page.waitForURL(`https://ecommerce-playground.lambdatest.io/index.php?route=product%2Fsearch&search=${searchTerm}`)
+  expect(await page.url()).toContain(searchTerm)
 });
 
 test('Verify homepage UI elements', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
-  const title1 = await page.locator('#entry_217978').textContent()
-  await expect(title1).toContain('Top Products')
-  const title2 = await page.locator('div[class="mz-tab-listing-header d-flex flex-wrap tabs"] h3[class="module-title"]').textContent()
-  await expect(title2).toContain('Top Collection')
-  const title3 = await page.locator('#entry_217991').textContent()
-  await expect(title3).toContain('From The Blog')
-  const title4 = await page.locator('#entry_217969').textContent()
-  await expect(title4).toContain('Top Trending Categories')
+  await page.goto('/');
+  await expect(await page.locator('#entry_217978').textContent()).toContain('Top Products')
+  await expect(await page.locator('div[class="mz-tab-listing-header d-flex flex-wrap tabs"] h3[class="module-title"]').textContent()).toContain('Top Collection')
+  await expect(await page.locator('#entry_217991').textContent()).toContain('From The Blog')
+  await expect(await page.locator('#entry_217969').textContent()).toContain('Top Trending Categories')
 });
 
 
 
 test('Navigate to product categories via mega menu', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
    await page.locator("span.title",{hasText: 'Mega Menu'}).hover();
    const submenu = await page.locator('#entry281_216475');
    await expect(submenu).toBeVisible();
    await page.locator('a[title="Desktop"]').click();
-   await page.waitForURL('https://ecommerce-playground.lambdatest.io/index.php?route=product/category&path=20');
+   await page.waitForURL('/index.php?route=product/category&path=20');
    const title = await page.locator('#entry_212392')
    const titleText = await title.textContent()
    await expect(titleText).toBe('Desktops')
@@ -74,7 +69,7 @@ const category = [
 
 category.forEach(({ searchCategory, expectedTitleContains }) => {
   test(`Search for "${searchCategory}" should update URL`, async ({ page }) => {
-       await page.goto('https://ecommerce-playground.lambdatest.io/');
+       await page.goto('/');
     await page.locator("span.title",{hasText: 'Mega Menu'}).hover();
        await page.locator(`a[title="${searchCategory}"]`).click();
     const title =  await page.locator('h1[class="h4"]')
@@ -86,7 +81,7 @@ category.forEach(({ searchCategory, expectedTitleContains }) => {
 
 
 test('Search for products using search bar', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
    const searchTerm = 'iphone'
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill(searchTerm)
   await page.locator('button[class="type-text"]').first().click();
@@ -101,7 +96,7 @@ const product = [ 'Canon' , 'HTC' , 'ipod'];
 
 product.forEach((product) => {
   test(`Search for different "${product}" `, async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill(product)
   await page.locator('button[class="type-text"]').first().click();
   const title =  await page.locator('h1[class="h4"]')
@@ -115,7 +110,7 @@ product.forEach((product) => {
 
 
 test('Search with no results', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
    const searchTerm = 'fadgadadvds'
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill(searchTerm)
   await page.locator('button[class="type-text"]').first().click();
@@ -126,7 +121,7 @@ test('Search with no results', async ({ page }) => {
 
 
 test('Search with empty query', async ({ page }) => {
-  await page.goto('https://ecommerce-playground.lambdatest.io/');
+  await page.goto('/');
    const searchTerm = ' '
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill(searchTerm)
   await page.locator('button[class="type-text"]').first().click(); 
@@ -136,48 +131,36 @@ test('Search with empty query', async ({ page }) => {
 
 
 test('View product details', async ({ page }) => {
- await page.goto('https://ecommerce-playground.lambdatest.io/');
+ await page.goto('/');
    const searchTerm = 'Apple'
   await page.locator('div[id="entry_217822"] input[placeholder="Search For Products"]').fill(searchTerm)
   await page.locator('button[class="type-text"]').first().click(); 
   await page.waitForSelector('.product-layout.product-grid');
   const products = await page.$$('.product-layout.product-grid')
-    expect.soft(products.length).toBeGreaterThan(0);
-  console.log(`printing productos ${products.length}`)
-  
- const randomIndex = Math.floor(Math.random() * products.length);
-  console.log(`printing productos ${randomIndex}`)
+  expect.soft(products.length).toBeGreaterThan(0);  
+  const randomIndex = Math.floor(Math.random() * products.length);
   const randomProduct = products[randomIndex];
+  const nameData = (await randomProduct.$('.caption .title'))
+  const name = await nameData?.innerText()
+  const priceData = await randomProduct.$('.caption .price');
+  const price = await priceData?.innerText();
+  const imageData = await randomProduct.$('.image img');
+  const imageUrl = await imageData?.getAttribute('src');
+
+
+  const selectedProduct = {
+  name: name?.trim(),
+  price: price?.trim(),
+  image: imageUrl
+  };
   
-const nameData = (await randomProduct.$('.caption .title'))
-console.log(`printing .....${nameData}`)
-const name = await nameData?.innerText()
-
-
-const priceData = await randomProduct.$('.caption .price');
-const price = await priceData?.innerText();
-
-
-const imageData = await randomProduct.$('.image img');
-const imageUrl = await imageData?.getAttribute('src');
-
-
-const selectedProduct = {
-name: name?.trim(),
-price: price?.trim(),
-image: imageUrl
-};
-
-console.log('Selected product:', selectedProduct);
-await randomProduct.click();
-await page.waitForURL('https://ecommerce-playground.lambdatest.io/index.php?route=product/**')
-
-const nameDetail = await page.locator('.h3').textContent()
-const priceDetail = await  page.locator('.price-new.mb-0').textContent()
-
-await expect.soft(selectedProduct.name).toContain(nameDetail)
-await expect.soft(selectedProduct.price).toContain(priceDetail)
-await expect.soft(page.locator('div[id="entry_216841"] input[name="quantity"]')).toHaveValue('1')
+  await randomProduct.click();
+  await page.waitForURL('/index.php?route=product/**')
+  const nameDetail = await page.locator('.h3').textContent()
+  const priceDetail = await  page.locator('.price-new.mb-0').textContent()
+  await expect.soft(selectedProduct.name).toContain(nameDetail)
+  await expect.soft(selectedProduct.price).toContain(priceDetail)
+  await expect.soft(page.locator('div[id="entry_216841"] input[name="quantity"]')).toHaveValue('1')
 });
 
 
