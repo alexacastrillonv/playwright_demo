@@ -18,3 +18,7 @@ result.xml
 allure-report/
 allure-results/
 
+.features-gen/
+reports/
+
+
