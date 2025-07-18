@@ -1,6 +1,7 @@
-class SearchProductPage {
+import { BasePage } from './BasePage';
+export class SearchProductPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.title = page.locator('h1[class="h4"]');
     this.searchInput = page.getByPlaceholder('Search For Products').first();
     this.productNotFoundMessage = page.locator('.content-products > p');
@@ -13,41 +14,49 @@ class SearchProductPage {
   }
 
   async getTitleText() {
-    return await this.title.textContent();
+    return this.title.textContent();
   }
 
   async getSearchInputValue() {
-    return await this.searchInput.inputValue();
+    return this.searchInput.inputValue();
   }
 
   async getProductNotFoundMessage() {
-    return await this.productNotFoundMessage.textContent();
+    return this.productNotFoundMessage.textContent();
   }
 
   async getProductListLength() {
-    return await this.productList.count();
-  }
-  async waitForURL(productUrl) {
-    await this.page.waitForURL(productUrl);
+    return this.productList.count();
   }
 
-  async getRandomProduct() {
-    const products = await this.page.$$('.product-layout.product-grid');
-    const randomIndex = Math.floor(Math.random() * products.length);
-    const randomProduct = products[randomIndex];
-    const nameData = await randomProduct.$('.caption .title');
+  async getProductElements() {
+    return this.page.$$('.product-layout.product-grid');
+  }
+
+  async extractProductData(productElement) {
+    const nameData = await productElement.$('.caption .title');
     const name = await nameData?.innerText();
-    const priceData = await randomProduct.$('.caption .price');
+    const priceData = await productElement.$('.caption .price');
     const price = await priceData?.innerText();
-    const imageData = await randomProduct.$('.image img');
+    const imageData = await productElement.$('.image img');
     const imageUrl = await imageData?.getAttribute('src');
-    const selectedProduct = {
+    return {
       name: name?.trim(),
       price: price?.trim(),
       image: imageUrl,
     };
-    await randomProduct.click();
+  }
+
+  async clickProduct(productElement) {
+    await productElement.click();
+  }
+
+  async getRandomProduct() {
+    const products = await this.getProductElements();
+    const randomIndex = Math.floor(Math.random() * products.length);
+    const randomProduct = products[randomIndex];
+    const selectedProduct = await this.extractProductData(randomProduct);
+    await this.clickProduct(randomProduct);
     return selectedProduct;
   }
 }
-module.exports = { SearchProductPage };

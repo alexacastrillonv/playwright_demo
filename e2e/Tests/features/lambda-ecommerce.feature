@@ -25,7 +25,7 @@ Feature: E-commerce playground website testing
     When the user hovers over Mega Menu
     Then the mega menu should expand
     When the user clicks on "Desktop" category
-    Then the user should be redirected to the "/index.php?route=product/category&path=20" page
+    Then the user should be redirected to the "route=product/category&path=20" page
     And the page should display "Desktops" in the heading
     And products should be listed in the category
 
@@ -37,10 +37,10 @@ Feature: E-commerce playground website testing
 
     # title-format: category <searchCategory>
     Examples:
-      | searchCategory | expectedHeading | categoryUrl                                                  |
-      | Apple          | Apple           | /index.php?route=product/manufacturer/info&manufacturer_id=8 |
-      | Desktop        | Desktops        | /index.php?route=product/category&path=20                    |
-      | HP             | HTC             | /index.php?route=product/manufacturer/info&manufacturer_id=5 |
+      | searchCategory | expectedHeading | categoryUrl                                       |
+      | Apple          | Apple           | route=product/manufacturer/info&manufacturer_id=8 |
+      | Desktop        | Desktops        | route=product/category&path=20                    |
+      | HP             | HTC             | route=product/manufacturer/info&manufacturer_id=5 |
 
   Scenario: Search for products using search bar
     When the user enters "iPhone" in the search bar
@@ -81,6 +81,6 @@ Feature: E-commerce playground website testing
     And the user clicks the search button
     And the results should contain "Apple" products
     And selects ramdom product from the search results
-    Then the prodcut name should be visible
+    Then the product name should be visible
     And the product price should be visible
     And the quantity selector should default to "1"

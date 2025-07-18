@@ -1,21 +1,18 @@
-class CategoryPage {
+import { BasePage } from './BasePage';
+
+export class CategoryPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.categoryTitle = page.locator('.content-title > .h4');
     this.productList = page.locator(
       'div[data-list~="product-list"] > div.product-grid'
     );
   }
 
-  async waitForURL(cateUrl) {
-    await this.page.waitForURL(cateUrl);
-  }
-
   async getCategoryTitle() {
-    return await this.categoryTitle.textContent();
+    return this.categoryTitle.textContent();
   }
   async getProductListLength() {
-    return await this.productList.count();
+    return this.productList.count();
   }
 }
-module.exports = { CategoryPage };
