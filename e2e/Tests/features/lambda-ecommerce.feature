@@ -80,7 +80,7 @@ Feature: E-commerce playground website testing
     When the user enters "Apple" in the search bar
     And the user clicks the search button
     And the results should contain "Apple" products
-    And selects ramdom product from the search results
+    And selects random product from the search results
     Then the product name should be visible
     And the product price should be visible
     And the quantity selector should default to "1"
