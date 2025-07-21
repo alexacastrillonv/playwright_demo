@@ -127,7 +127,7 @@ Then('a {string} message should be displayed', async ({ ctx }, message) => {
   ).toContain(message);
 });
 
-When('selects ramdom product from the search results', async ({ ctx }) => {
+When('selects random product from the search results', async ({ ctx }) => {
   await ctx.searchProductPage.waitForURL(
     `/index.php?route=product%2Fsearch&search=**`
   );
