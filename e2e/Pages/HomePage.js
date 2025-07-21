@@ -1,6 +1,8 @@
-class HomePage {
+import { BasePage } from './BasePage';
+
+export class HomePage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.homePageTitle = page.getByTitle('Poco Electro');
     this.cartBadge = page.locator('.cart-item-total').first();
     this.dummyMessage = page.locator('p[class="m-0 font-size-sm"] strong');
@@ -17,9 +19,6 @@ class HomePage {
       .locator('.footer')
       .filter({ hasText: '© LambdaTest - Powered by OpenCart' });
   }
-  async navigateTo() {
-    await this.page.goto('/');
-  }
 
   async clickHomeMenuOption() {
     await this.homeMenuOption.click();
@@ -30,7 +29,7 @@ class HomePage {
   }
 
   async getDummyMessage() {
-    return await this.dummyMessage.textContent();
+    return this.dummyMessage.textContent();
   }
 
   async getModuleTitles() {
@@ -53,4 +52,3 @@ class HomePage {
     await this.searchButton.click();
   }
 }
-module.exports = { HomePage };
